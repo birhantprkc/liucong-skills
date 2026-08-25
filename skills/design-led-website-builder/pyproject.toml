@@ -1,0 +1,12 @@
+[project]
+name = "design-led-website-builder"
+version = "1.1.0"
+description = "Research-first website design skill: thin brief → live references → direction → polished UI."
+requires-python = ">=3.11"
+dependencies = ["pyyaml>=6.0"]
+
+[project.optional-dependencies]
+browser = ["playwright>=1.40", "axe-playwright-python>=0.1"]
+
+[tool.uv]
+package = false

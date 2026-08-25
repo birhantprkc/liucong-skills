@@ -1,0 +1,4 @@
+interface:
+  display_name: "Design-led Website Builder"
+  short_description: "Lock intent, then research matching sites, then build"
+  default_prompt: "Use $design-led-website-builder. I am [who]. This site is for [why]. It should show [what]. Optional brand / URL / screenshot / style. If the brief could mean more than one product, ask once to lock intent, then research that job and build."

@@ -1,0 +1,288 @@
+schema_version: "1.0"
+last_reviewed: "2026-08-25"
+description: "Git-friendly routing catalog for finding relevant website references. Entries describe source collections, not endorsements of every listed site."
+
+sources:
+  - id: "awwwards"
+    name: "Awwwards"
+    url: "https://www.awwwards.com/websites/"
+    source_type: "award-gallery"
+    access: "public"
+    coverage: ["full-sites", "awards", "technology-filters"]
+    scenarios: ["agency", "architecture", "corporate", "ecommerce", "editorial", "event-campaign", "experimental", "fashion-luxury", "hospitality", "mobile-app", "portfolio", "startup-launch"]
+    styles: ["cinematic", "colorful", "editorial", "expressive-type", "futuristic", "luxury", "organic-craft", "playful", "quiet-minimal", "spatial-3d"]
+    components: ["case-study", "footer", "gallery", "hero", "navigation"]
+    motion: ["microinteractions", "page-transitions", "parallax", "scroll-choreography", "text-animation", "video", "webgl-3d"]
+    tech_lenses: ["css-animation", "framer", "gsap", "motion", "next-js", "shopify", "three-js", "webflow", "webgl"]
+    strengths: ["award-level-craft", "experimental-interaction", "technology-discovery", "visual-trends"]
+    use_when: "A high-craft or technically ambitious direction needs broad comparison and technology filtering."
+    caveats:
+      - "Award selection can overrepresent spectacle and underrepresent conversion, accessibility, maintainability, or performance."
+      - "Technology tags are discovery leads and should be independently verified."
+    evidence:
+      - url: "https://www.awwwards.com/websites/"
+        checked_at: "2026-08-25"
+        basis: "Live filters expose category, tag, technology, country, font, and color facets."
+
+  - id: "gsap-showcase"
+    name: "GSAP Showcase"
+    url: "https://gsap.com/showcase/"
+    source_type: "technology-showcase"
+    access: "public"
+    coverage: ["full-sites", "motion", "implementation-leads"]
+    scenarios: ["agency", "event-campaign", "experimental", "fashion-luxury", "portfolio", "startup-launch"]
+    styles: ["cinematic", "expressive-type", "playful", "spatial-3d"]
+    components: ["case-study", "gallery", "hero", "navigation"]
+    motion: ["microinteractions", "page-transitions", "scroll-choreography", "svg", "text-animation", "webgl-3d"]
+    tech_lenses: ["gsap"]
+    strengths: ["motion-reference", "plugin-discovery", "technology-claimed"]
+    use_when: "The brief needs sophisticated timelines, scroll behavior, SVG, text, or interaction choreography."
+    caveats:
+      - "Inclusion supports GSAP relevance but does not identify every plugin or implementation detail."
+      - "High-motion references still require reduced-motion and performance analysis."
+    evidence:
+      - url: "https://gsap.com/showcase/"
+        checked_at: "2026-08-25"
+        basis: "Official showcase lists current sites and GSAP tool families including scroll, SVG, UI, and text."
+
+  - id: "siteinspire"
+    name: "Siteinspire"
+    url: "https://www.siteinspire.com/"
+    source_type: "curated-gallery"
+    access: "public"
+    coverage: ["full-sites", "style-filters", "type-filters", "subject-filters", "platform-filters"]
+    scenarios: ["agency", "architecture", "ecommerce", "editorial", "fashion-luxury", "hospitality", "portfolio"]
+    styles: ["editorial", "expressive-type", "monochrome", "organic-craft", "quiet-minimal", "swiss-grid"]
+    components: ["case-study", "gallery", "navigation"]
+    motion: ["microinteractions", "none"]
+    tech_lenses: ["framer", "shopify", "webflow"]
+    strengths: ["typography", "grid", "broad-taxonomy", "similar-site-discovery"]
+    use_when: "Typography, grid, layout, or quieter art direction matters more than technical spectacle."
+    caveats:
+      - "Category labels describe presentation and subject, not necessarily business effectiveness."
+    evidence:
+      - url: "https://www.siteinspire.com/"
+        checked_at: "2026-08-25"
+        basis: "Live gallery exposes styles, types, subjects, platforms, categories, and similar-site links."
+
+  - id: "godly"
+    name: "Godly"
+    url: "https://godly.website/"
+    source_type: "curated-gallery"
+    access: "public"
+    coverage: ["full-sites", "modern-product-sites"]
+    scenarios: ["ai-product", "ecommerce", "mobile-app", "portfolio", "saas-product", "startup-launch"]
+    styles: ["colorful", "expressive-type", "futuristic", "playful", "quiet-minimal", "spatial-3d"]
+    components: ["hero", "navigation", "product-demo"]
+    motion: ["microinteractions", "page-transitions", "scroll-choreography", "webgl-3d"]
+    tech_lenses: []
+    strengths: ["current-product-aesthetic", "startup-reference", "visual-trends"]
+    use_when: "A current AI, SaaS, startup, app, or technology product needs visually ambitious peers."
+    caveats:
+      - "Modern visual selection is broad; validate scenario fit and conversion structure elsewhere."
+    evidence:
+      - url: "https://godly.website/"
+        checked_at: "2026-08-25"
+        basis: "Live directory exposes AI, Web3, portfolio, startup, ecommerce, app, SaaS, finance, health, and other categories."
+
+  - id: "css-design-awards"
+    name: "CSS Design Awards"
+    url: "https://www.cssdesignawards.com/"
+    source_type: "award-gallery"
+    access: "public"
+    coverage: ["full-sites", "judging-scores", "feature-tags"]
+    scenarios: ["agency", "corporate", "ecommerce", "experimental", "portfolio"]
+    styles: ["colorful", "editorial", "expressive-type", "playful", "quiet-minimal"]
+    components: ["hero", "navigation"]
+    motion: ["parallax", "scroll-choreography", "svg", "video", "webgl-3d"]
+    tech_lenses: ["css-animation", "webgl"]
+    strengths: ["ui-score", "ux-score", "innovation-score", "feature-tags"]
+    use_when: "Separate UI, UX, and innovation signals are useful alongside visual inspiration."
+    caveats:
+      - "Awards and public votes do not replace direct usability or accessibility testing."
+    evidence:
+      - url: "https://www.cssdesignawards.com/about"
+        checked_at: "2026-08-25"
+        basis: "Official methodology describes judge and public awards for UI, UX, and innovation."
+
+  - id: "lapa-ninja"
+    name: "Lapa Ninja"
+    url: "https://www.lapa.ninja/"
+    source_type: "landing-page-gallery"
+    access: "public"
+    coverage: ["landing-pages", "section-patterns"]
+    scenarios: ["ai-product", "mobile-app", "saas-product", "startup-launch"]
+    styles: ["colorful", "editorial", "playful", "quiet-minimal"]
+    components: ["faq", "features", "footer", "forms", "hero", "landing-sections", "pricing", "testimonials"]
+    motion: ["microinteractions", "none"]
+    tech_lenses: []
+    strengths: ["conversion-structure", "section-discovery", "copy-hierarchy"]
+    use_when: "The problem is landing-page hierarchy, conversion sections, or component sequencing."
+    caveats:
+      - "Section inspiration can become generic unless adapted to the product's actual evidence and story."
+    evidence:
+      - url: "https://www.lapa.ninja/"
+        checked_at: "2026-08-25"
+        basis: "Current collection focuses on landing pages and section-level inspiration."
+
+  - id: "curated-design"
+    name: "Curated"
+    url: "https://curated.design/"
+    source_type: "curated-gallery"
+    access: "public"
+    coverage: ["full-sites", "live-websites"]
+    scenarios: ["agency", "ecommerce", "hospitality", "portfolio", "saas-product", "startup-launch"]
+    styles: ["colorful", "editorial", "organic-craft", "playful", "quiet-minimal"]
+    components: ["hero", "navigation", "product-demo"]
+    motion: ["microinteractions", "scroll-choreography"]
+    tech_lenses: []
+    strengths: ["live-site-reference", "broad-discovery"]
+    use_when: "A broad set of real, live contemporary websites is needed for a first reference pass."
+    caveats:
+      - "Perform direct audit before making technical or performance claims."
+    evidence:
+      - url: "https://curated.design/"
+        checked_at: "2026-08-25"
+        basis: "Current gallery identifies itself as inspiration from real, live websites."
+
+  - id: "minimal-gallery"
+    name: "Minimal Gallery"
+    url: "https://minimal.gallery/"
+    source_type: "curated-gallery"
+    access: "public"
+    coverage: ["full-sites", "templates", "tools", "platform-filters"]
+    scenarios: ["agency", "architecture", "ecommerce", "hospitality", "portfolio", "saas-product", "startup-launch"]
+    styles: ["editorial", "expressive-type", "monochrome", "organic-craft", "quiet-minimal", "swiss-grid"]
+    components: ["gallery", "hero", "pricing"]
+    motion: ["microinteractions", "none"]
+    tech_lenses: ["framer", "webflow"]
+    strengths: ["minimal-systems", "platform-discovery", "scenario-tags"]
+    use_when: "A restrained, functional, or minimal direction needs scenario-specific references."
+    caveats:
+      - "Minimal appearance alone does not guarantee clarity or accessibility."
+    evidence:
+      - url: "https://minimal.gallery/"
+        checked_at: "2026-08-25"
+        basis: "Live gallery exposes scenario tags and platform filters including Framer and Webflow."
+
+  - id: "one-page-love"
+    name: "One Page Love"
+    url: "https://onepagelove.com/"
+    source_type: "one-page-gallery"
+    access: "public"
+    coverage: ["one-page-sites", "section-patterns", "templates"]
+    scenarios: ["event-campaign", "mobile-app", "portfolio", "saas-product", "startup-launch"]
+    styles: ["colorful", "expressive-type", "playful", "quiet-minimal"]
+    components: ["faq", "features", "footer", "hero", "landing-sections", "pricing"]
+    motion: ["microinteractions", "scroll-choreography"]
+    tech_lenses: []
+    strengths: ["single-page-architecture", "section-discovery", "focused-conversion"]
+    use_when: "A focused single-page narrative or section-level solution is required."
+    caveats:
+      - "A one-page structure is not suitable for every content volume, SEO model, or user journey."
+    evidence:
+      - url: "https://onepagelove.com/"
+        checked_at: "2026-08-25"
+        basis: "Current site provides curated one-page websites and section examples."
+
+  - id: "brutalist-websites"
+    name: "Brutalist Websites"
+    url: "https://brutalistwebsites.com/"
+    source_type: "style-gallery"
+    access: "public"
+    coverage: ["full-sites", "single-style-lens"]
+    scenarios: ["editorial", "event-campaign", "experimental", "portfolio"]
+    styles: ["brutalist", "expressive-type", "monochrome"]
+    components: ["gallery", "navigation"]
+    motion: ["microinteractions", "none"]
+    tech_lenses: []
+    strengths: ["anti-polish", "raw-interface", "style-contrast"]
+    use_when: "The direction intentionally questions polished conventions or needs a strong counter-reference."
+    caveats:
+      - "Deliberate friction still needs a usable path; rawness is not permission to ignore semantics or readability."
+    evidence:
+      - url: "https://brutalistwebsites.com/"
+        checked_at: "2026-08-25"
+        basis: "The collection explicitly frames web brutalism as a reaction to comfortable, optimistic mainstream design."
+
+  - id: "the-fwa"
+    name: "The FWA"
+    url: "https://thefwa.com/"
+    source_type: "award-gallery"
+    access: "public"
+    coverage: ["full-sites", "experiential-work"]
+    scenarios: ["event-campaign", "experimental", "fashion-luxury", "portfolio"]
+    styles: ["cinematic", "futuristic", "playful", "spatial-3d"]
+    components: ["hero", "product-demo"]
+    motion: ["page-transitions", "scroll-choreography", "video", "webgl-3d"]
+    tech_lenses: ["webgl"]
+    strengths: ["experiential-reference", "interactive-storytelling"]
+    use_when: "The project calls for digital experience, campaign, entertainment, or immersive storytelling references."
+    caveats:
+      - "Awarded experience work may not map to ordinary product budgets or maintenance constraints."
+    evidence:
+      - url: "https://thefwa.com/"
+        checked_at: "2026-08-25"
+        basis: "Official awards directory was reachable; individual work still requires direct audit."
+
+  - id: "footer-design"
+    name: "Footer"
+    url: "https://www.footer.design/"
+    source_type: "component-gallery"
+    access: "public"
+    coverage: ["footers", "style-filters"]
+    scenarios: ["agency", "corporate", "ecommerce", "portfolio", "saas-product"]
+    styles: ["colorful", "expressive-type", "playful", "quiet-minimal"]
+    components: ["footer"]
+    motion: ["microinteractions"]
+    tech_lenses: []
+    strengths: ["component-depth", "footer-taxonomy"]
+    use_when: "The footer needs a specific information, conversion, or brand role rather than a generic closing strip."
+    caveats:
+      - "Adapt information architecture and legal requirements instead of copying a visual shell."
+    evidence:
+      - url: "https://www.footer.design/"
+        checked_at: "2026-08-25"
+        basis: "Live gallery exposes typographic, illustrative, grid, animated, cards, dark, bright, and other footer filters."
+
+  - id: "aaa11y"
+    name: "AAA11Y Accessible Website Gallery"
+    url: "https://www.aaa11y.com/en"
+    source_type: "accessible-gallery"
+    access: "public"
+    coverage: ["full-sites", "accessibility-review", "real-world-examples"]
+    scenarios: ["content-platform", "corporate", "ecommerce", "nonprofit"]
+    styles: ["colorful", "editorial", "quiet-minimal"]
+    components: ["forms", "gallery", "navigation"]
+    motion: ["microinteractions", "none"]
+    tech_lenses: ["semantic-html", "wcag"]
+    strengths: ["accessibility-evaluated", "inclusive-design", "real-world-examples"]
+    use_when: "The brief needs visually credible reference sites whose accessibility is part of the selection criteria."
+    caveats:
+      - "Gallery inclusion is a research lead, not a permanent compliance guarantee; re-test the live target and the new implementation."
+      - "Accessibility evaluation criteria and site behavior can change over time."
+    evidence:
+      - url: "https://www.aaa11y.com/en/about/"
+        checked_at: "2026-08-25"
+        basis: "The gallery states that editorial selections undergo mechanical design and code review against its accessibility criteria."
+
+  - id: "w3c-wai-tutorials"
+    name: "W3C Web Accessibility Initiative Tutorials"
+    url: "https://www.w3.org/WAI/tutorials/"
+    source_type: "implementation-guidance"
+    access: "public"
+    coverage: ["component-patterns", "wcag-techniques", "inclusive-content"]
+    scenarios: ["content-platform"]
+    styles: []
+    components: ["forms", "images", "navigation", "tables"]
+    motion: ["none"]
+    tech_lenses: ["semantic-html", "wai-aria", "wcag"]
+    strengths: ["accessibility-patterns", "inclusive-design", "normative-traceability"]
+    use_when: "A visual reference must be translated into accessible images, navigation, tables, forms, or other implementation patterns."
+    caveats:
+      - "This is implementation guidance, not an art-direction gallery."
+      - "Use the current WCAG mapping and test the actual component with assistive and keyboard workflows."
+    evidence:
+      - url: "https://www.w3.org/WAI/tutorials/"
+        checked_at: "2026-08-25"
+        basis: "Official WAI tutorials provide component examples and link their techniques to WCAG success criteria."

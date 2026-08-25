@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light" />
+    <meta
+      name="description"
+      content="A fictional browser-test fixture for a design-led website workflow."
+    />
+    <link rel="icon" href="data:," />
+    <title>Trace/Work — Evidence-first research fixture</title>
+    <link rel="stylesheet" href="styles.css" />
+    <noscript>
+      <style>
+        @media (max-width: 720px) {
+          .primary-nav { position: static; grid-column: 1 / -1; box-shadow: none; }
+        }
+      </style>
+    </noscript>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header" data-header>
+      <a class="wordmark" href="#top" aria-label="TRACE/WORK — back to top">
+        <span>TRACE/WORK</span>
+        <small>acceptance fixture · 01</small>
+      </a>
+
+      <button
+        class="nav-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="primary-navigation"
+      >
+        <span>Menu</span>
+        <span class="nav-toggle__mark" aria-hidden="true"></span>
+      </button>
+
+      <nav class="primary-nav" id="primary-navigation" aria-label="Primary navigation">
+        <a href="#workflow">How it works</a>
+        <a href="#method">Evidence model</a>
+        <a class="nav-action" href="#evaluation">Request evaluation</a>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="hero" id="top" aria-labelledby="hero-title">
+        <div class="hero__copy">
+          <p class="eyebrow"><span>Research operations</span> Fictional product fixture</p>
+          <h1 id="hero-title">Keep every conclusion tethered to its source.</h1>
+          <p class="hero__lede">
+            A demonstration of how a calm editorial direction can explain an AI research
+            workflow without invented proof, decorative futurism, or inaccessible motion.
+          </p>
+          <div class="hero__actions">
+            <a class="button button--primary" href="#workflow">Inspect the workflow</a>
+            <a class="text-link" href="#evaluation">Request an evaluation <span aria-hidden="true">↘</span></a>
+          </div>
+        </div>
+
+        <aside class="hero__evidence" aria-labelledby="evidence-state-title">
+          <div class="evidence-heading">
+            <p class="index">EVIDENCE STATE / 00</p>
+            <span class="status status--pending">Fixture</span>
+          </div>
+          <h2 id="evidence-state-title">The interface shows uncertainty instead of disguising it.</h2>
+          <svg class="evidence-map" viewBox="0 0 560 300" role="img" aria-labelledby="map-title map-desc">
+            <title id="map-title">Evidence flow from sources to human review</title>
+            <desc id="map-desc">Three connected stages: source set, compared claims, and human review.</desc>
+            <path class="map-line" d="M92 78 C204 78 184 152 280 152 S374 225 468 225" />
+            <g class="map-node" transform="translate(92 78)">
+              <circle r="40" />
+              <text text-anchor="middle" y="4">01</text>
+            </g>
+            <g class="map-node" transform="translate(280 152)">
+              <circle r="46" />
+              <text text-anchor="middle" y="4">02</text>
+            </g>
+            <g class="map-node" transform="translate(468 225)">
+              <circle r="52" />
+              <text text-anchor="middle" y="4">03</text>
+            </g>
+            <text class="map-label" x="44" y="146">SOURCE SET</text>
+            <text class="map-label" x="223" y="225">COMPARE CLAIMS</text>
+            <text class="map-label" x="411" y="298">HUMAN REVIEW</text>
+          </svg>
+          <dl class="evidence-meta">
+            <div><dt>Claims</dt><dd>Unverified</dd></div>
+            <div><dt>Product media</dt><dd>Wireframe fallback</dd></div>
+            <div><dt>Motion</dt><dd>Optional layer</dd></div>
+          </dl>
+        </aside>
+      </section>
+
+      <section class="workflow section-shell" id="workflow" aria-labelledby="workflow-title">
+        <header class="section-heading">
+          <p class="index">WORKFLOW / 01</p>
+          <div>
+            <h2 id="workflow-title">A product demo that reads like evidence.</h2>
+            <p>Each step remains available as text when JavaScript, motion, or product media is unavailable.</p>
+          </div>
+        </header>
+
+        <div class="demo">
+          <div class="demo-tabs" role="tablist" aria-label="Research workflow steps">
+            <button id="tab-source" role="tab" aria-selected="true" aria-controls="panel-source" tabindex="0" data-step="source">
+              <span>01</span><strong>Assemble sources</strong><small>Define scope and provenance</small>
+            </button>
+            <button id="tab-compare" role="tab" aria-selected="false" aria-controls="panel-compare" tabindex="-1" data-step="compare">
+              <span>02</span><strong>Compare claims</strong><small>Keep conflicts visible</small>
+            </button>
+            <button id="tab-review" role="tab" aria-selected="false" aria-controls="panel-review" tabindex="-1" data-step="review">
+              <span>03</span><strong>Review synthesis</strong><small>Return judgment to people</small>
+            </button>
+          </div>
+
+          <div class="demo-stage" aria-live="polite">
+            <div class="stage-chrome" aria-hidden="true">
+              <span>fixture://research-space</span><span>● draft data</span>
+            </div>
+            <div class="stage-grid" aria-hidden="true"></div>
+
+            <article class="demo-panel" id="panel-source" role="tabpanel" aria-labelledby="tab-source" data-panel="source">
+              <p class="panel-kicker">Source set / 12 records</p>
+              <h3>Start with provenance, not a blank prompt.</h3>
+              <p>Group material by origin and access date before asking the system to compare it.</p>
+              <div class="record-list" aria-label="Illustrative source records">
+                <div><span>01</span><b>Field interview</b><em>Owned · draft</em></div>
+                <div><span>02</span><b>Methods paper</b><em>Public · checked</em></div>
+                <div><span>03</span><b>Internal memo</b><em>Restricted · pending</em></div>
+              </div>
+            </article>
+
+            <article class="demo-panel" id="panel-compare" role="tabpanel" aria-labelledby="tab-compare" data-panel="compare">
+              <p class="panel-kicker">Claim comparison / 03 tensions</p>
+              <h3>Keep disagreement in the working surface.</h3>
+              <p>Contradictions remain inspectable instead of being flattened into a confident paragraph.</p>
+              <div class="claim-grid" aria-label="Illustrative claim comparison">
+                <div><span>CLAIM A</span><p>Adoption is driven by review speed.</p><em>2 supporting · 1 conflicting</em></div>
+                <div><span>CLAIM B</span><p>Trust depends on visible source trails.</p><em>3 supporting · 0 conflicting</em></div>
+              </div>
+            </article>
+
+            <article class="demo-panel" id="panel-review" role="tabpanel" aria-labelledby="tab-review" data-panel="review">
+              <p class="panel-kicker">Human review / unresolved</p>
+              <h3>Make the final decision explicitly human.</h3>
+              <p>Reviewers can inspect support, flag gaps, and refuse a conclusion without losing the work.</p>
+              <div class="review-card" aria-label="Illustrative review status">
+                <div><span class="review-mark" aria-hidden="true">?</span><div><b>Conclusion requires review</b><small>Two claims rely on pending evidence.</small></div></div>
+                <button type="button" disabled>Approval unavailable in fixture</button>
+              </div>
+            </article>
+          </div>
+        </div>
+        <noscript><p class="noscript-note">Enhanced step switching is unavailable; all three workflow steps are shown in sequence.</p></noscript>
+      </section>
+
+      <section class="method section-shell" id="method" aria-labelledby="method-title">
+        <header class="section-heading section-heading--compact">
+          <p class="index">EVIDENCE MODEL / 02</p>
+          <div>
+            <h2 id="method-title">Trust is a visible interface state.</h2>
+            <p>These are design rules for the fixture, not claims about a shipping product.</p>
+          </div>
+        </header>
+        <div class="principles">
+          <article>
+            <span>01</span><h3>Name the state</h3>
+            <p>Draft, detected, inferred, and unknown should not share one visual treatment.</p>
+          </article>
+          <article>
+            <span>02</span><h3>Expose the trail</h3>
+            <p>Put provenance where skepticism appears, not on a distant methodology page.</p>
+          </article>
+          <article>
+            <span>03</span><h3>Design refusal</h3>
+            <p>A credible system needs an understandable way to withhold or revise a conclusion.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="evaluation section-shell" id="evaluation" aria-labelledby="evaluation-title">
+        <div class="evaluation__terms">
+          <p class="index">EVALUATION / 03</p>
+          <h2 id="evaluation-title">Pricing is pending. The next step is not.</h2>
+          <p>
+            This fixture refuses to invent commercial terms. A real build would replace this
+            block only after price, qualification, privacy, and response ownership are approved.
+          </p>
+          <dl>
+            <div><dt>Plan structure</dt><dd>Draft</dd></div>
+            <div><dt>Numerical price</dt><dd>Not supplied</dd></div>
+            <div><dt>Form destination</dt><dd>Local fixture only</dd></div>
+          </dl>
+        </div>
+
+        <form class="evaluation-form" action="#evaluation" method="get" novalidate>
+          <p class="form-intro">Request a fictional evaluation workspace</p>
+          <div class="field-row">
+            <div class="field">
+              <label for="name">Name</label>
+              <input id="name" name="name" autocomplete="name" required aria-describedby="name-error" />
+              <small class="field-error" id="name-error"></small>
+            </div>
+            <div class="field">
+              <label for="email">Work email</label>
+              <input id="email" name="email" type="email" autocomplete="email" required aria-describedby="email-error" />
+              <small class="field-error" id="email-error"></small>
+            </div>
+          </div>
+          <div class="field">
+            <label for="team">What should the evaluation prove?</label>
+            <textarea id="team" name="team" rows="4" required aria-describedby="team-error"></textarea>
+            <small class="field-error" id="team-error"></small>
+          </div>
+          <button class="button button--primary" type="submit">Validate this fixture request</button>
+          <p class="form-status" role="status" tabindex="-1"></p>
+        </form>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <p>TRACE/WORK <span>Design-led website Skill acceptance fixture</span></p>
+      <p>No customer claims · no external assets · no submission</p>
+    </footer>
+  </body>
+</html>

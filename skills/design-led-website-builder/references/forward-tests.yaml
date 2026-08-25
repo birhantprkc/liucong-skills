@@ -1,0 +1,230 @@
+schema_version: "1.0"
+description: "Realistic requests used to test catalog routing and preserve behavioral invariants without prescribing generated wording."
+
+cases:
+  - id: "uncertain-ai-saas"
+    prompt: "We built an AI analysis tool for research teams. We want a premium, credible site that does not look like a template. I cannot name a style. Need product demo, features, cases, and pricing."
+    research_mode: "reference-pass"
+    catalog_query:
+      scenario: ["ai-product"]
+      style: ["editorial", "quiet-minimal"]
+      component: ["product-demo"]
+      motion: ["microinteractions"]
+    minimum:
+      coverage_threshold: 0.75
+      results_at_threshold: 2
+      source_types: 2
+    behavioral_invariants:
+      - "This brief already names a product site. Skip the intent ask. Research live product and landing-page references, then build."
+      - "Return a compact direction after research; do not open a style quiz."
+      - "When asked to build, create the runnable artifact instead of substituting a weekly plan or advisory proposal."
+      - "Prioritize product proof and trust over generic futuristic decoration."
+      - "Do not fabricate customer cases, metrics, or product capability."
+      - "Use real approved product captures for proof; route illustrative gaps to original generation, verified licensed media, or explicit placeholders."
+      - "Keep the preview presentation-ready with art-directed, responsive placeholders that can be replaced without redesigning the page."
+    failure_signals:
+      - "Starts coding or asks 'what style do you like?' before opening references."
+      - "Returns a phased schedule or dossier YAML as the main deliverable when implementation was requested."
+      - "Defaults to neon gradients, glass cards, or 3D without evidence."
+      - "Treats premium as a complete design specification."
+      - "Reuses a reference screenshot or a search-result image without asset-level permission and provenance."
+      - "Uses blank gray boxes for image-led sections, leaving the user unable to understand the intended finished art direction."
+
+  - id: "thin-brief-illustrator"
+    prompt: "I am Lin Ke, an independent illustrator. I want a personal site so brands will commission me. Show about, six works, process, and contact. I cannot name a style."
+    research_mode: "reference-pass"
+    catalog_query:
+      scenario: ["portfolio"]
+      style: ["editorial", "organic-craft"]
+      component: ["gallery"]
+      motion: ["microinteractions"]
+    minimum:
+      coverage_threshold: 0.75
+      results_at_threshold: 2
+      source_types: 2
+    behavioral_invariants:
+      - "Treat the thin brief as enough to start research; do not interview for a style name first."
+      - "Open live illustrator or image-led portfolio references, then return a direction and build."
+      - "The first deliverable after the return is a runnable website, not a plan."
+      - "Do not fabricate client logos, testimonials, or awards."
+      - "Missing work samples use high-fidelity illustrative placeholders with a replacement brief, never gray boxes."
+      - "Hunt licensed or generated paper/print materials for the page; do not ship a type-only first viewport."
+      - "Do not clone the skill fixture's visual language onto this brief."
+    failure_signals:
+      - "Asks what style they like before researching."
+      - "Keeps asking follow-up questions after one answer."
+      - "Skips research because the brief was short."
+      - "Returns a schedule, moodboard-only, or YAML dossier as the main deliverable."
+      - "Produces a generic purple/teal SaaS or Behance-grid template."
+      - "Ships type plus CSS ornament and no sourced textures or images."
+
+  - id: "ambiguous-blog-intent"
+    prompt: "Make a personal blog for my friend Liu Cong. He writes notes and also wants to show projects. Style is undecided."
+    research_mode: "reference-pass"
+    catalog_query:
+      scenario: ["portfolio"]
+      style: ["editorial", "quiet-minimal"]
+      component: ["navigation"]
+    minimum:
+      coverage_threshold: 0.75
+      results_at_threshold: 2
+      source_types: 2
+    behavioral_invariants:
+      - "Ask at most one intent question before any research, with options derived from this brief (publishing vs visual vs user has a reference)."
+      - "Do not start browsing until intent is locked."
+      - "After the one answer, research matching high-craft sites for that job only and build; do not keep asking."
+      - "They brought no brand; still build from notes plus projects."
+      - "Do not invent a career, clients, or awards."
+    failure_signals:
+      - "Starts researching before the user answers the intent question."
+      - "Keeps asking questions and never builds."
+      - "Stalls because there is no brand kit."
+      - "Researches the wrong job after the lock."
+      - "Pads the site with fake case studies."
+      - "Ships a type-only page with CSS ornament and no hunted materials."
+
+  - id: "ambiguous-guanwang-intent"
+    prompt: "Build a company website that looks premium. We have not decided if it is mainly product, company story, or recruiting."
+    research_mode: "reference-pass"
+    catalog_query:
+      scenario: ["saas-product"]
+      style: ["editorial", "quiet-minimal"]
+      component: ["product-demo"]
+    minimum:
+      coverage_threshold: 0.5
+      results_at_threshold: 1
+      source_types: 1
+    behavioral_invariants:
+      - "Ask once before research: product site vs company intro vs recruiting vs user has a reference."
+      - "Do not treat premium as a design specification."
+      - "Research only the locked job, then build."
+    failure_signals:
+      - "Starts researching before the user answers the intent question."
+      - "Asks a style quiz (modern vs minimal, light vs dark)."
+
+  - id: "user-supplied-reference"
+    prompt: "I like the feel of https://www.siteinspire.com/ — make my portfolio from these three images."
+    research_mode: "reference-pass"
+    catalog_query:
+      scenario: ["portfolio"]
+      style: ["editorial"]
+      component: ["gallery"]
+    minimum:
+      coverage_threshold: 0.75
+      results_at_threshold: 2
+      source_types: 1
+    behavioral_invariants:
+      - "Treat the supplied URL or screenshot as reference one; extract principles and do not clone the signature."
+      - "Do not ask a direction question; the reference is the lock."
+      - "Adapt the thin content (three images) into a real site."
+    failure_signals:
+      - "Ignores the supplied reference and searches generic blogs."
+      - "Pixel-clones the reference layout, type, or assets."
+
+  - id: "thin-brief-cafe"
+    prompt: "I opened a small bar in Tiong Bahru. I want a site with atmosphere, menu, natural wine, reservations, and address. I only have two interior photos."
+    research_mode: "reference-pass"
+    catalog_query:
+      scenario: ["hospitality"]
+      style: ["organic-craft", "luxury"]
+      component: ["gallery"]
+      motion: ["microinteractions"]
+    minimum:
+      coverage_threshold: 0.5
+      results_at_threshold: 1
+      source_types: 1
+    behavioral_invariants:
+      - "Research hospitality and restaurant references before building."
+      - "Keep booking, hours, and address findable on the first path."
+      - "Use the two real photos as proof; do not invent a packed dining room or celebrity guests."
+      - "Do not open a questionnaire; the cafe brief is enough to lock hospitality and build."
+    failure_signals:
+      - "Hides address or hours behind animation."
+      - "Fills the gallery with unlabeled stock food as if it were this bar."
+      - "Skips research and ships a generic restaurant template."
+
+  - id: "immersive-portfolio"
+    prompt: "Portfolio for a 3D artist: award-site motion, space, and sound, but project text and project pages must stay readable."
+    research_mode: "forensic-audit"
+    catalog_query:
+      scenario: ["portfolio"]
+      style: ["spatial-3d"]
+      motion: ["webgl-3d"]
+      tech: ["gsap"]
+    minimum:
+      coverage_threshold: 1.0
+      results_at_threshold: 2
+      source_types: 2
+    behavioral_invariants:
+      - "Audit a small number of relevant targets before selecting the implementation."
+      - "Return the researched direction (and sound/fallback choices) before writing production UI."
+      - "Implement and inspect at least one ambitious signature-effect spike before rejecting GSAP, Canvas, WebGL, WebGPU, or another relevant advanced technique."
+      - "Keep semantic project content beneath the immersive layer."
+      - "Require sound opt-in, reduced-motion behavior, and a non-WebGL fallback."
+    failure_signals:
+      - "Chooses a static or video-only primary experience solely from generic cost or schedule concern without comparing a working advanced spike."
+      - "Returns a three-week work plan instead of beginning the requested website implementation."
+      - "Copies signature composition or third-party models and media."
+      - "Assumes every animation is GSAP because the site is in a GSAP showcase."
+
+  - id: "restrained-corporate"
+    prompt: "Redesign the site for an industrial materials company. Restrained, editorial, clear lines of business, credentials, and global contact. No flashy animation."
+    research_mode: "reference-pass"
+    catalog_query:
+      scenario: ["corporate"]
+      style: ["editorial"]
+      component: ["footer"]
+      motion: ["none"]
+    minimum:
+      coverage_threshold: 0.75
+      results_at_threshold: 2
+      source_types: 2
+    behavioral_invariants:
+      - "Research editorial and corporate references before building."
+      - "Use evidence, hierarchy, and information architecture to create authority."
+      - "Treat the global footer and contact path as functional architecture."
+      - "Keep motion at static or feedback-only level."
+    failure_signals:
+      - "Mistakes corporate restraint for a generic empty template."
+      - "Adds smooth scrolling or cinematic transitions against the stated preference."
+
+  - id: "brutalist-cultural-event"
+    prompt: "A one-page independent culture festival. Raw, anti-precious, close to Brutalist, but date, venue, ticket price, and buy must be obvious at a glance."
+    research_mode: "reference-pass"
+    catalog_query:
+      scenario: ["event-campaign"]
+      style: ["brutalist"]
+      component: ["navigation"]
+      motion: ["none"]
+    minimum:
+      coverage_threshold: 1.0
+      results_at_threshold: 1
+      source_types: 1
+    behavioral_invariants:
+      - "Research brutalist and event references, then keep friction as art direction without hiding transactional facts."
+      - "Test legibility, keyboard order, and narrow mobile layout."
+      - "Use the style gallery as a contrast lens rather than a template source."
+    failure_signals:
+      - "Uses illegibility as proof of authenticity."
+      - "Burys event logistics inside interaction."
+
+  - id: "accessible-nonprofit"
+    prompt: "Information site for an organization serving people with visual impairment. Credible, warm, readable on phones. Programs, donation form, and resource navigation."
+    research_mode: "reference-pass"
+    catalog_query:
+      scenario: ["nonprofit"]
+      style: ["quiet-minimal"]
+      component: ["forms", "navigation"]
+      motion: ["none"]
+      strength: ["inclusive-design"]
+    minimum:
+      coverage_threshold: 0.8
+      results_at_threshold: 1
+      source_types: 1
+    behavioral_invariants:
+      - "Use accessible real-world sites for visual reference and WAI patterns for implementation."
+      - "Treat screen-reader structure, visible focus, contrast, and error recovery as design."
+      - "Keep donation claims, impact figures, and endorsements factual."
+    failure_signals:
+      - "Equates accessibility with visually bland design."
+      - "Relies on an automated score as proof of usability."

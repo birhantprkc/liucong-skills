@@ -6,6 +6,7 @@
 
 | Skill | 用途 |
 | --- | --- |
+| [`design-led-website-builder`](skills/design-led-website-builder/) | 从简短需求出发，先锁定网站用途，再研究同类真实网站、收集可用视觉素材，最后完成有明确设计方向的网站或改版。适合新建网站和视觉重构，不用于普通 Bug 修复或文案微调。 |
 | [`painterly-3d2-cinema`](skills/painterly-3d2-cinema/) | 把一句话扩展成三渲二动作短片提示词生产包，覆盖剧情方向、角色、场景、Midjourney V8.1 故事板和 Seedance 视频提示词。只生成提示词，不直接生成图片或视频。这个 Skill 在视频平台的 Agent 上使用，效果更佳。 |
 | [`gzh-title-strategist`](skills/gzh-title-strategist/) | 分析微信公众号文章，基于文章真实价值、目标读者、事实证据和历史数据生成、改写、批评并排序多风格标题，同时检查标题党、关键词堆砌与时效风险。 |
 
@@ -88,6 +89,51 @@ $gzh-title-strategist 结合这些文章的阅读和互动数据，分析哪些�
 该 Skill 会先诊断文章类型、目标读者、核心结论、事实证据和可交付内容，再生成稳健准确型、网感点击型、专业权威型、数据关键词型和长期型标题。默认会对前 5 名进行评分，并给出 1 个主标题、2 个备选标题及风险提示。
 
 涉及热词或历史数据时，它只使用 Skill 内置的历史样本或用户提供的证据，不会把关键词相关性描述为微信推荐算法规则，也不会为了点击率添加正文没有依据的公司、产品、数字或夸张结论。
+
+## 安装 `design-led-website-builder`
+
+推荐使用软链接安装，便于持续获取仓库更新：
+
+```bash
+export SKILLS_HOME="/path/to/your-agent/skills"
+mkdir -p "$SKILLS_HOME"
+ln -s "$(pwd)/skills/design-led-website-builder" "$SKILLS_HOME/design-led-website-builder"
+```
+
+也可以复制安装：
+
+```bash
+export SKILLS_HOME="/path/to/your-agent/skills"
+mkdir -p "$SKILLS_HOME"
+cp -R skills/design-led-website-builder "$SKILLS_HOME/"
+```
+
+这个 Skill 需要 Agent 具备网页检索、浏览器查看与前端代码编辑能力。素材研究阶段还需要图片搜索或图片生成能力。Skill 自带的目录检索和校验脚本使用 Python 3.11 及 PyYAML；如需运行这些脚本，可在 Skill 目录中安装锁定依赖：
+
+```bash
+cd skills/design-led-website-builder
+uv sync
+```
+
+## 使用 `design-led-website-builder`
+
+给出网站服务的对象、建站目的和必须展示的内容即可：
+
+```text
+$design-led-website-builder 我是一名独立 AI 研究者，希望做一个个人网站，用来展示研究方向、代表项目、文章和联系方式。整体克制、编辑感强。
+```
+
+也可以同时提供现有品牌、参考网站 URL、截图或明确的视觉风格。若需求可能对应多种网站产品，Skill 会先用一轮问题锁定意图并等待回答；意图明确时会直接开始。
+
+默认工作流为：
+
+1. 识别现有品牌、内容和参考资料，判断网站的核心任务。
+2. 必要时只进行一轮意图确认。
+3. 研究 3–5 个同类真实网站，并收集可授权使用或可生成的纹理、艺术作品、编辑图片等视觉素材。
+4. 汇报设计方向、参考来源、已收集素材和明确不会照搬的部分。
+5. 在同一轮继续完成网站实现，并按内置质量标准检查视觉、响应式、可访问性与基本工程质量。
+
+该 Skill 不会虚构客户、奖项、业绩、人物照片或职业经历，也不会复制参考网站的标志性布局、文案和资产。用户自己的品牌与参考资料优先于内置目录；缺少个人作品或照片时，会保留清晰标注的高保真占位，而不会伪造证明材料。
 
 ## 更新
 
