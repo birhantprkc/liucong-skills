@@ -9,6 +9,7 @@
 | [`design-led-website-builder`](skills/design-led-website-builder/) | 从简短需求出发，先锁定网站用途，再研究同类真实网站、收集可用视觉素材，最后完成有明确设计方向的网站或改版。适合新建网站和视觉重构，不用于普通 Bug 修复或文案微调。 |
 | [`painterly-3d2-cinema`](skills/painterly-3d2-cinema/) | 把一句话扩展成三渲二动作短片提示词生产包，覆盖剧情方向、角色、场景、Midjourney V8.1 故事板和 Seedance 视频提示词。只生成提示词，不直接生成图片或视频。这个 Skill 在视频平台的 Agent 上使用，效果更佳。 |
 | [`gzh-title-strategist`](skills/gzh-title-strategist/) | 分析微信公众号文章，基于文章真实价值、目标读者、事实证据和历史数据生成、改写、批评并排序多风格标题，同时检查标题党、关键词堆砌与时效风险。 |
+| [`llm-wiki-ops`](skills/llm-wiki-ops/) | 在飞书知识库中初始化、绑定和运维 LLM Wiki，支持资料与文章入库、来源标注、词条双链、索引维护、知识查询和健康度体检。 |
 
 ## 安装 `painterly-3d2-cinema`
 
@@ -134,6 +135,37 @@ $design-led-website-builder 我是一名独立 AI 研究者，希望做一个个
 5. 在同一轮继续完成网站实现，并按内置质量标准检查视觉、响应式、可访问性与基本工程质量。
 
 该 Skill 不会虚构客户、奖项、业绩、人物照片或职业经历，也不会复制参考网站的标志性布局、文案和资产。用户自己的品牌与参考资料优先于内置目录；缺少个人作品或照片时，会保留清晰标注的高保真占位，而不会伪造证明材料。
+
+## 安装和使用 `llm-wiki-ops`
+
+这个 Skill 需要飞书登录态以及 `lark-cli`，或宿主 Agent 提供的等价飞书知识库和云文档工具。推荐复制安装，让每个 Agent 独立维护自己的绑定状态：
+
+```bash
+export SKILLS_HOME="/path/to/your-agent/skills"
+mkdir -p "$SKILLS_HOME"
+cp -R skills/llm-wiki-ops "$SKILLS_HOME/"
+```
+
+在 Codex 中，可安装到个人 Skills 目录：
+
+```bash
+mkdir -p "$HOME/.agents/skills"
+cp -R skills/llm-wiki-ops "$HOME/.agents/skills/"
+```
+
+首次调用时，Skill 会检查 `config/wiki-binding.json`。如果没有有效绑定，它会引导用户绑定已有知识库或创建新的 LLM Wiki：
+
+```text
+$llm-wiki-ops 帮我初始化或绑定一个 LLM Wiki。
+```
+
+绑定后可以直接入库、查询和体检：
+
+```text
+$llm-wiki-ops 把这份资料入库，提取值得沉淀的词条并补全双链。
+```
+
+真实的 `config/wiki-binding.json` 是本地运行时状态，已通过 Skill 自带的 `.gitignore` 排除。仓库只提供脱敏的配置示例，任何知识空间 ID、节点 token 和文档 ID 都不应提交。完整说明见 [`skills/llm-wiki-ops/README.md`](skills/llm-wiki-ops/README.md)。
 
 ## 更新
 
