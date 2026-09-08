@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "name": "我的测试题",
+  "cases": [
+    {
+      "id": "my-logic-01",
+      "kind": "qa",
+      "tier": "simple",
+      "seconds": 120,
+      "prompt": "A之后是C，C之后是B。只输出三个字母的顺序。",
+      "images": [],
+      "files": [],
+      "outputs": [],
+      "tags": [
+        "logic"
+      ],
+      "scoring": {
+        "type": "exact",
+        "answers": [
+          "ACB"
+        ],
+        "normalization": "trim"
+      },
+      "source": {
+        "kind": "custom",
+        "title": "我的原创题"
+      }
+    }
+  ]
+}

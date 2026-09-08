@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>模型测评任务看板</title>
+<style>
+  :root {
+    --bg: #f3f1ec;
+    --panel: #fffdf8;
+    --ink: #2c2a26;
+    --ink-soft: #6b675e;
+    --line: #e3ded2;
+    --wood: #b08968;
+    --accent: #c0563e;
+    --todo: #8a7f6d;
+    --doing: #3d7ea6;
+    --done: #4f8a5b;
+    --radius: 14px;
+    --shadow: 0 2px 6px rgba(60,50,35,.08), 0 8px 24px rgba(60,50,35,.07);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+    background:
+      radial-gradient(1200px 500px at 15% -10%, rgba(176,137,104,.10), transparent 60%),
+      radial-gradient(900px 400px at 100% 0%, rgba(192,86,62,.07), transparent 55%),
+      var(--bg);
+    color: var(--ink);
+    min-height: 100vh;
+    line-height: 1.5;
+  }
+  .desk { max-width: 1080px; margin: 0 auto; padding: 28px 20px 60px; }
+
+  header.bar {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap; margin-bottom: 22px;
+  }
+  .brand { display: flex; align-items: center; gap: 12px; }
+  .brand .seal {
+    width: 44px; height: 44px; border-radius: 12px; flex: none;
+    background: linear-gradient(145deg, #c0563e, #9a3f2c);
+    color: #fff7ee; display: grid; place-items: center;
+    font-size: 20px; font-weight: 700; box-shadow: var(--shadow);
+  }
+  .brand h1 { font-size: 22px; letter-spacing: .5px; }
+  .brand p { font-size: 12px; color: var(--ink-soft); }
+
+  .stats { display: flex; gap: 10px; flex-wrap: wrap; }
+  .stat {
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: var(--radius); padding: 10px 16px; min-width: 84px;
+    box-shadow: var(--shadow); text-align: center;
+  }
+  .stat b { display: block; font-size: 22px; font-variant-numeric: tabular-nums; }
+  .stat span { font-size: 12px; color: var(--ink-soft); }
+  .stat.s-todo b { color: var(--todo); }
+  .stat.s-doing b { color: var(--doing); }
+  .stat.s-done b { color: var(--done); }
+
+  .toolbar {
+    display: flex; gap: 12px; align-items: flex-end; flex-wrap: wrap;
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: var(--radius); padding: 16px; margin-bottom: 26px;
+    box-shadow: var(--shadow);
+  }
+  .field { display: flex; flex-direction: column; gap: 6px; flex: 1 1 180px; }
+  .field label { font-size: 12px; color: var(--ink-soft); font-weight: 600; }
+  .field input {
+    border: 1px solid var(--line); border-radius: 10px; background: #fff;
+    padding: 10px 12px; font-size: 14px; color: var(--ink);
+    outline: none; transition: border-color .15s, box-shadow .15s;
+    font-family: inherit; width: 100%;
+  }
+  .field input:focus { border-color: var(--wood); box-shadow: 0 0 0 3px rgba(176,137,104,.18); }
+
+  .btn {
+    border: none; cursor: pointer; font-family: inherit; font-size: 14px;
+    border-radius: 10px; padding: 10px 18px; font-weight: 600;
+    transition: transform .1s ease, box-shadow .15s ease, background .15s;
+  }
+  .btn:active { transform: translateY(1px); }
+  .btn-add {
+    background: linear-gradient(145deg, #3f6f52, #2e5a3f); color: #fdf8ef;
+    box-shadow: 0 3px 10px rgba(46,90,63,.3);
+  }
+  .btn-add:hover { box-shadow: 0 5px 14px rgba(46,90,63,.4); }
+  .btn-ghost { background: #fff; border: 1px solid var(--line); color: var(--ink-soft); }
+  .btn-ghost:hover { border-color: var(--wood); color: var(--ink); }
+
+  .filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; align-items: center; }
+  .filters .cap { font-size: 13px; color: var(--ink-soft); margin-right: 2px; font-weight: 600; }
+  .chip {
+    border: 1px solid var(--line); background: #fff; color: var(--ink-soft);
+    border-radius: 999px; padding: 6px 16px; font-size: 13px; cursor: pointer;
+    font-family: inherit; transition: all .15s;
+  }
+  .chip:hover { border-color: var(--wood); }
+  .chip.active { background: var(--ink); color: #fdf8ef; border-color: var(--ink); font-weight: 600; }
+
+  .board { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; align-items: start; }
+  .col-head { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; padding: 0 4px; }
+  .col-head .dot { width: 10px; height: 10px; border-radius: 50%; }
+  .col-head h2 { font-size: 15px; font-weight: 700; }
+  .col-head .count {
+    margin-left: auto; font-size: 12px; color: var(--ink-soft);
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: 999px; padding: 2px 10px;
+  }
+  .col-head.todo .dot { background: var(--todo); }
+  .col-head.doing .dot { background: var(--doing); }
+  .col-head.done .dot { background: var(--done); }
+
+  .col-cards { display: flex; flex-direction: column; gap: 14px; min-height: 60px; }
+  .empty-hint {
+    border: 1.5px dashed var(--line); border-radius: var(--radius);
+    color: #b7b0a1; text-align: center; padding: 26px 10px; font-size: 13px;
+    background: rgba(255,253,248,.5);
+  }
+
+  .card {
+    background: var(--panel); border: 1px solid var(--line);
+    border-radius: var(--radius); padding: 16px 16px 14px;
+    box-shadow: var(--shadow); position: relative; overflow: hidden;
+    animation: pop .25s ease;
+  }
+  @keyframes pop { from { opacity: 0; transform: translateY(6px) scale(.98); } to { opacity: 1; } }
+  .card::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; }
+  .card.st-todo::before { background: var(--todo); }
+  .card.st-doing::before { background: var(--doing); }
+  .card.st-done::before { background: var(--done); }
+
+  .card .model-name { font-size: 16px; font-weight: 700; word-break: break-all; }
+  .card .q-label { font-size: 11px; color: var(--ink-soft); margin-top: 10px; font-weight: 600; letter-spacing: 1px; }
+  .card .question {
+    margin-top: 4px; font-size: 13px; color: var(--ink-soft);
+    background: rgba(176,137,104,.08); border-radius: 8px; padding: 8px 10px;
+    word-break: break-all;
+  }
+  .card .meta {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-top: 12px; gap: 8px; flex-wrap: wrap;
+  }
+  .badge { font-size: 12px; font-weight: 600; padding: 3px 12px; border-radius: 999px; }
+  .st-todo .badge { background: rgba(138,127,109,.15); color: var(--todo); }
+  .st-doing .badge { background: rgba(61,126,166,.15); color: var(--doing); }
+  .st-done .badge { background: rgba(79,138,91,.15); color: var(--done); }
+  .card .time { font-size: 11px; color: #b7b0a1; }
+
+  .card .actions { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; align-items: center; }
+  .btn-sm { padding: 7px 14px; font-size: 13px; border-radius: 8px; }
+  .btn-start { background: rgba(61,126,166,.12); color: var(--doing); }
+  .btn-start:hover { background: rgba(61,126,166,.22); }
+  .btn-finish { background: rgba(79,138,91,.12); color: var(--done); }
+  .btn-finish:hover { background: rgba(79,138,91,.22); }
+  .btn-del {
+    background: none; border: none; color: #b7b0a1; cursor: pointer;
+    font-size: 14px; line-height: 1; padding: 6px 8px; border-radius: 6px;
+  }
+  .btn-del:hover { color: var(--accent); background: rgba(192,86,62,.08); }
+
+  .toast {
+    position: fixed; left: 50%; bottom: 30px; transform: translateX(-50%) translateY(20px);
+    background: var(--ink); color: #fdf8ef; padding: 10px 22px; border-radius: 999px;
+    font-size: 13px; opacity: 0; pointer-events: none;
+    transition: opacity .25s, transform .25s; box-shadow: var(--shadow); z-index: 50;
+    max-width: 86vw;
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  footer.note { margin-top: 36px; text-align: center; font-size: 12px; color: #b7b0a1; }
+
+  @media (max-width: 860px) {
+    .board { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
+  }
+  @media (max-width: 560px) {
+    .desk { padding: 18px 12px 48px; }
+    .brand h1 { font-size: 18px; }
+    .stats { width: 100%; }
+    .stat { flex: 1 1 calc(50% - 10px); min-width: 0; padding: 8px 10px; }
+    .stat b { font-size: 18px; }
+    .toolbar { padding: 12px; }
+    .field { flex: 1 1 100%; }
+    .btn-add { width: 100%; }
+    .filters .cap { width: 100%; margin-bottom: 2px; }
+    .chip { padding: 5px 13px; }
+  }
+</style>
+</head>
+<body>
+<div class="desk">
+
+  <header class="bar">
+    <div class="brand">
+      <div class="seal">测</div>
+      <div>
+        <h1>模型测评任务看板</h1>
+        <p>桌面工作台 · 本地保存 · 离线可用</p>
+      </div>
+    </div>
+    <div class="stats" id="stats">
+      <div class="stat s-total"><b id="n-total">0</b><span>总数</span></div>
+      <div class="stat s-todo"><b id="n-todo">0</b><span>待测试</span></div>
+      <div class="stat s-doing"><b id="n-doing">0</b><span>测试中</span></div>
+      <div class="stat s-done"><b id="n-done">0</b><span>已完成</span></div>
+    </div>
+  </header>
+
+  <form class="toolbar" id="add-form" autocomplete="off">
+    <div class="field">
+      <label for="inp-model">模型名称</label>
+      <input id="inp-model" type="text" placeholder="例如：Kimi K3" maxlength="60">
+    </div>
+    <div class="field">
+      <label for="inp-question">测评题目</label>
+      <input id="inp-question" type="text" placeholder="例如：请写一首关于秋天的诗" maxlength="200">
+    </div>
+    <div class="field" style="flex:0 0 auto; justify-content:flex-end;">
+      <label>&nbsp;</label>
+      <button type="submit" class="btn btn-add" id="btn-add">＋ 新增任务</button>
+    </div>
+  </form>
+
+  <div class="filters" id="filters">
+    <span class="cap">状态筛选</span>
+    <button type="button" class="chip active" data-filter="all">全部</button>
+    <button type="button" class="chip" data-filter="todo">待测试</button>
+    <button type="button" class="chip" data-filter="doing">测试中</button>
+    <button type="button" class="chip" data-filter="done">已完成</button>
+  </div>
+
+  <div class="board">
+    <section>
+      <div class="col-head todo"><span class="dot"></span><h2>待测试</h2><span class="count" id="c-todo">0</span></div>
+      <div class="col-cards" id="col-todo"></div>
+    </section>
+    <section>
+      <div class="col-head doing"><span class="dot"></span><h2>测试中</h2><span class="count" id="c-doing">0</span></div>
+      <div class="col-cards" id="col-doing"></div>
+    </section>
+    <section>
+      <div class="col-head done"><span class="dot"></span><h2>已完成</h2><span class="count" id="c-done">0</span></div>
+      <div class="col-cards" id="col-done"></div>
+    </section>
+  </div>
+
+  <footer class="note">数据保存在浏览器 localStorage 中，刷新或关闭后仍会保留</footer>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+(function () {
+  "use strict";
+  var STORE_KEY = "model-eval-board-v1";
+  var STATUS_TEXT = { todo: "待测试", doing: "测试中", done: "已完成" };
+  var SEED = [
+    { id: "seed-1", model: "Kimi K3", question: "请在 200 字内解释什么是大语言模型的幻觉问题", status: "todo", createdAt: 1757299200000 },
+    { id: "seed-2", model: "GLM-5.3-Flash", question: "编写一个 JavaScript 函数，判断字符串是否为回文", status: "doing", createdAt: 1757299200000 },
+    { id: "seed-3", model: "豆包进化模型", question: "为一款咖啡品牌写三条 15 字以内的中文广告语", status: "done", createdAt: 1757299200000 }
+  ];
+
+  var $ = function (id) { return document.getElementById(id); };
+
+  function loadTasks() {
+    try {
+      var raw = localStorage.getItem(STORE_KEY);
+      if (raw) {
+        var arr = JSON.parse(raw);
+        if (Array.isArray(arr)) return arr;
+      }
+    } catch (e) { /* 数据损坏时回退到初始数据 */ }
+    return null;
+  }
+
+  function saveTasks() {
+    try {
+      localStorage.setItem(STORE_KEY, JSON.stringify(tasks));
+    } catch (e) { /* 隐私模式等场景下静默失败 */ }
+  }
+
+  var tasks = loadTasks();
+  if (!tasks) { tasks = SEED.slice(); saveTasks(); }
+
+  var currentFilter = "all";
+
+  function fmtTime(ts) {
+    var d = new Date(ts);
+    function p(n) { return (n < 10 ? "0" : "") + n; }
+    return d.getFullYear() + "-" + p(d.getMonth() + 1) + "-" + p(d.getDate()) +
+      " " + p(d.getHours()) + ":" + p(d.getMinutes());
+  }
+
+  var toastTimer = null;
+  function toast(msg) {
+    var t = $("toast");
+    t.textContent = msg;
+    t.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { t.classList.remove("show"); }, 2200);
+  }
+
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  function cardHTML(task) {
+    var actions = "";
+    if (task.status === "todo") {
+      actions = '<button type="button" class="btn btn-ghost btn-sm btn-start" data-act="start" data-id="' + esc(task.id) + '">开始测试 →</button>';
+    } else if (task.status === "doing") {
+      actions = '<button type="button" class="btn btn-ghost btn-sm btn-finish" data-act="finish" data-id="' + esc(task.id) + '">✓ 标记完成</button>';
+    }
+    return '<article class="card st-' + task.status + '">' +
+      '<div class="model-name">' + esc(task.model) + '</div>' +
+      '<div class="q-label">题目</div>' +
+      '<div class="question">' + esc(task.question) + '</div>' +
+      '<div class="meta"><span class="badge">' + STATUS_TEXT[task.status] + '</span>' +
+      '<span class="time">' + fmtTime(task.createdAt) + '</span></div>' +
+      '<div class="actions">' + actions +
+      '<button type="button" class="btn-del" data-act="del" data-id="' + esc(task.id) + '" title="删除任务" aria-label="删除任务">✕</button>' +
+      '</div></article>';
+  }
+
+  function findTask(id) {
+    for (var i = 0; i < tasks.length; i++) if (tasks[i].id === id) return tasks[i];
+    return null;
+  }
+
+  function render() {
+    var cols = { todo: $("col-todo"), doing: $("col-doing"), done: $("col-done") };
+    ["todo", "doing", "done"].forEach(function (st) {
+      var list = tasks.filter(function (t) { return t.status === st; });
+      cols[st].innerHTML = list.length
+        ? list.map(cardHTML).join("")
+        : '<div class="empty-hint">暂无' + STATUS_TEXT[st] + "的任务</div>";
+      $("c-" + st).textContent = list.length;
+    });
+
+    var counts = { todo: 0, doing: 0, done: 0 };
+    tasks.forEach(function (t) {
+      if (counts[t.status] === undefined) counts[t.status] = 0;
+      counts[t.status] += 1;
+    });
+    $("n-total").textContent = tasks.length;
+    $("n-todo").textContent = counts.todo;
+    $("n-doing").textContent = counts.doing;
+    $("n-done").textContent = counts.done;
+  }
+
+  function applyFilter() {
+    var sections = document.querySelectorAll(".board > section");
+    ["todo", "doing", "done"].forEach(function (st, i) {
+      sections[i].style.display = (currentFilter === "all" || currentFilter === st) ? "" : "none";
+    });
+  }
+
+  $("add-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+    var model = $("inp-model").value.trim();
+    var question = $("inp-question").value.trim();
+    if (!model) { toast("请填写模型名称"); $("inp-model").focus(); return; }
+    if (!question) { toast("请填写测评题目"); $("inp-question").focus(); return; }
+    tasks.unshift({
+      id: "t-" + Date.now() + "-" + Math.random().toString(36).slice(2, 8),
+      model: model, question: question, status: "todo", createdAt: Date.now()
+    });
+    saveTasks();
+    $("inp-model").value = "";
+    $("inp-question").value = "";
+    $("inp-model").focus();
+    render();
+    toast("已新增任务：" + model);
+  });
+
+  $("filters").addEventListener("click", function (e) {
+    var chip = e.target.closest(".chip");
+    if (!chip) return;
+    currentFilter = chip.getAttribute("data-filter");
+    document.querySelectorAll("#filters .chip").forEach(function (c) {
+      c.classList.toggle("active", c === chip);
+    });
+    applyFilter();
+  });
+
+  document.addEventListener("click", function (e) {
+    var btn = e.target.closest("[data-act]");
+    if (!btn) return;
+    var act = btn.getAttribute("data-act");
+    var task = findTask(btn.getAttribute("data-id"));
+    if (!task) return;
+    if (act === "start") {
+      task.status = "doing";
+      saveTasks(); render(); applyFilter();
+      toast("「" + task.model + "」开始测试");
+    } else if (act === "finish") {
+      task.status = "done";
+      saveTasks(); render(); applyFilter();
+      toast("「" + task.model + "」已完成 🎉");
+    } else if (act === "del") {
+      if (window.confirm("确定删除「" + task.model + "」的任务吗？")) {
+        tasks = tasks.filter(function (t) { return t.id !== task.id; });
+        saveTasks(); render(); applyFilter();
+        toast("已删除任务");
+      }
+    }
+  });
+
+  render();
+  applyFilter();
+})();
+</script>
+</body>
+</html>

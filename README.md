@@ -7,6 +7,7 @@
 | Skill | 用途 |
 | --- | --- |
 | [`design-led-website-builder`](skills/design-led-website-builder/) | 从简短需求出发，先锁定网站用途，再研究同类真实网站、收集可用视觉素材，最后完成有明确设计方向的网站或改版。适合新建网站和视觉重构，不用于普通 Bug 修复或文案微调。 |
+| [`liucong-model-eval`](skills/liucong-model-eval/) | 初始化并运行可追溯的多模型同题对照测评，支持内置演示题、自有题库和权威视觉 benchmark 子集；隔离被测进程，保留首轮回答、工具轨迹、产物与验收记录。 |
 | [`painterly-3d2-cinema`](skills/painterly-3d2-cinema/) | 把一句话扩展成三渲二动作短片提示词生产包，覆盖剧情方向、角色、场景、Midjourney V8.1 故事板和 Seedance 视频提示词。只生成提示词，不直接生成图片或视频。这个 Skill 在视频平台的 Agent 上使用，效果更佳。 |
 | [`gzh-title-strategist`](skills/gzh-title-strategist/) | 分析微信公众号文章，基于文章真实价值、目标读者、事实证据和历史数据生成、改写、批评并排序多风格标题，同时检查标题党、关键词堆砌与时效风险。 |
 | [`llm-wiki-ops`](skills/llm-wiki-ops/) | 在飞书知识库中初始化、绑定和运维 LLM Wiki，支持资料与文章入库、来源标注、词条双链、索引维护、知识查询和健康度体检。 |
@@ -166,6 +167,49 @@ $llm-wiki-ops 把这份资料入库，提取值得沉淀的词条并补全双链
 ```
 
 真实的 `config/wiki-binding.json` 是本地运行时状态，已通过 Skill 自带的 `.gitignore` 排除。仓库只提供脱敏的配置示例，任何知识空间 ID、节点 token 和文档 ID 都不应提交。完整说明见 [`skills/llm-wiki-ops/README.md`](skills/llm-wiki-ops/README.md)。
+
+## 安装和使用 `liucong-model-eval`
+
+推荐使用软链接安装，便于持续获取仓库更新：
+
+```bash
+export SKILLS_HOME="/path/to/your-agent/skills"
+mkdir -p "$SKILLS_HOME"
+ln -s "$(pwd)/skills/liucong-model-eval" "$SKILLS_HOME/liucong-model-eval"
+```
+
+这个 Skill 的模型执行器目前只支持 macOS，需要 Node.js 22 或以上、Claude Code，以及用户自己的火山 Agent Plan 套餐、专属 Key 和可用模型 ID。其他系统仍可编辑和导入题库，但执行器会拒绝在未经验证的隔离环境中运行。只有从 Hugging Face 导入远程 benchmark 子集时才需要 uv 与 Python 3.11。
+
+首次使用，在 Skill 目录初始化并检查本机环境：
+
+```bash
+cd skills/liucong-model-eval
+node scripts/setup.mjs init --model=glm-5.3-flash
+node scripts/setup.mjs doctor
+node scripts/runner.mjs isolation-check
+```
+
+然后由用户本人在一个终端运行 `node scripts/connect.mjs`，按隐藏输入提示粘贴 Agent Plan Key，并保持进程运行。Key 默认只保存在该连接进程内存中，不应发到聊天、写进命令参数、题库或报告。
+
+在另一个终端先完成当前连接和所需能力检查，再运行正式测评：
+
+```bash
+node scripts/runner.mjs run --cases=connection --model=glm-5.3-flash
+node scripts/runner.mjs run --cases=visioncheck --model=glm-5.3-flash
+node scripts/runner.mjs run --cases=toolscheck --model=glm-5.3-flash
+node scripts/runner.mjs run --dry-run --tier=simple --count=3
+node scripts/runner.mjs run --tier=simple --count=3
+node scripts/runner.mjs status
+node scripts/runner.mjs export
+```
+
+视觉检查只在测图片题时需要，工具检查只在测代码题时需要。执行器默认把配置、运行记录和导出包放在 `~/.local/share/liucong-model-eval/`，而不是 Skill 目录；私有题库、图片和导出结果公开前需自行筛选。内置题仅用于演示和回归，少量导入题应称为“某 benchmark 子集”，不能冒充完整官方榜单成绩。
+
+显式调用示例：
+
+```text
+$liucong-model-eval 用我的题库对照测试两个模型，先做 dry run，把题号、模型和预算列给我确认。
+```
 
 ## 更新
 

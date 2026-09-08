@@ -1,0 +1,4 @@
+interface:
+  display_name: "刘聪模型测评"
+  short_description: "运行可追溯、隔离且同题同条件的多模型对照测评"
+  default_prompt: "使用 $liucong-model-eval 初始化测评环境，并用同一组题目对照测试我指定的模型。"
